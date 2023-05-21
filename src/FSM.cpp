@@ -1,4 +1,4 @@
-#include "FSM.h"
+#include "../headers/FSM.h"
 
 FSM::FSM(State *_initialState) : currentState(_initialState) {
 
@@ -32,6 +32,19 @@ void FSM::setCurrentState(State* currentState) {
     currentState = currentState;
 }
 
+void FSM::setTransitionsTable(vector<Transition> _transitionsTable) {
+    transitionsTable = _transitionsTable;
+}
+
+vector<Transition> FSM::getTransitionsTable(){
+    return transitionsTable;
+}
+
+State* FSM::getCurrentState(){
+    return currentState;
+}
+
 void FSM::executer() {
     this->currentState->executer();
 }
+

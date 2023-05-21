@@ -5,11 +5,14 @@
 #include<fstream>
 #include<string>
 
-#include "State.h";
-
 using namespace std;
 
+#include "State.h"
+#include "Transition.h"
 class State;
+
+// Define a type alias for transitions
+//using Transition = tuple<char, char, int>;
 
 class FSM {
 private:
@@ -17,12 +20,15 @@ private:
     string fileName;
     ifstream fileDescriptor;
     State* currentState;
+    vector<Transition> transitionsTable;
 public:
     FSM(State *_initialState);
     string getName();
     void setName(string _name);
     string getFileName();
     void setFileName(string _name);
+    vector<Transition> getTransitionsTable();
+    void setTransitionsTable(vector<Transition> _transitionsTable);
     // ifstream getFileDescriptor();
     // void setFileDescriptor(ifstream _name);
     State* getCurrentState();
@@ -30,4 +36,4 @@ public:
     void executer();
 };
 
-#endif FSM_H
+#endif

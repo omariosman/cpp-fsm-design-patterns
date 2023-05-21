@@ -15,12 +15,12 @@ class Action;
 
 class State {
 private:
-    string name;
+    char name;
     vector<Action> actionsList;
 public:
-    State(string _name);
-    string getName();
-    void setName(string _name);
+    State(char _name);
+    char getName();
+    void setName(char _name);
     void setActionsList(vector<Action> _actionsList);
     // polymorphic
     void executer();

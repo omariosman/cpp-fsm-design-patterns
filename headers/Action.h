@@ -49,7 +49,7 @@ public:
     void setName(string _name);
     void setFSM(FSM *_fsm);
     // polymorphic
-    void executer();
+    char executer();
 };
 
 #endif ACTION_H
