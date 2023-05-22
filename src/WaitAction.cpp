@@ -28,6 +28,7 @@ char WaitAction::executer() {
     vector<Transition> transitions = fsm->getTransitionsTable();
     while (true) {
         int input;
+        cout << "Enter a transition code: ";
         cin >> input;
         for (int i = 0; i < transitions.size(); i++) {
             Transition transition = transitions[i];

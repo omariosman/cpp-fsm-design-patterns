@@ -4,6 +4,7 @@
 #include<iostream>
 #include<fstream>
 #include<string>
+#include<map>
 
 #include "State.h"
 #include "Transition.h"
@@ -22,6 +23,8 @@ private:
     ifstream fileDescriptor;
     State* currentState;
     vector<Transition> transitionsTable;
+    //variables map
+    map<string, int> vars;
 public:
     FSM(State *_initialState);
     string getName();
