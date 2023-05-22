@@ -9,19 +9,22 @@
 
 using namespace std;
 
+#include "State.h"
+
+class State;
 
 class Transition {
 private:
-    char srcState;
-    char destState;
+    State *srcState;
+    State *destState;
     int transitionCode;
 public:
-    Transition(char _srcState,char _destState, int _transitionCode );
+    Transition(State *_srcState,State *_destState, int _transitionCode );
    // char srcState();
     //void setName(char _name);
 
-    char getSrcState();
-    char getDestState();
+    State *getSrcState();
+    State *getDestState();
     int getTransitionCode();
 
 };

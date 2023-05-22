@@ -5,11 +5,12 @@
 #include<fstream>
 #include<string>
 
-using namespace std;
-
 #include "State.h"
 #include "Transition.h"
+
+using namespace std;
 class State;
+class Transition;
 
 // Define a type alias for transitions
 //using Transition = tuple<char, char, int>;

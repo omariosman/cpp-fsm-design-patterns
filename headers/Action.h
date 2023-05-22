@@ -16,7 +16,7 @@ class State;
 class FSM;
 
 class Action {
-private:
+protected:
     // We need to make composition for FSM in Action so that
     // we can setCurrentState inside wait method after 
     // getting user input
@@ -42,14 +42,17 @@ private:
         string operand3;
     */
 
-
 public:
-    Action(FSM *_fsm, string _name, vector<string> _operands);
-    string getName();
-    void setName(string _name);
-    void setFSM(FSM *_fsm);
-    // polymorphic
-    char executer();
+    Action(FSM *_fsm, string _name, vector<string> _operands) : fsm(_fsm), name(_name), operands(_operands) {
+
+    }
+    // polymorphic methods
+    virtual string getName() = 0;
+    virtual void setName(string _name) = 0;
+    virtual void setFSM(FSM *_fsm) = 0;
+    
+    virtual char executer() = 0;
+    virtual ~Action() = default;
 };
 
 #endif ACTION_H

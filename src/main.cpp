@@ -5,46 +5,42 @@
 #include <tuple>
 
 #include "FSM.h"
-#include "Action.h"
+//#include "Action.h"
+#include "WaitAction.h"
 #include "State.h"
 #include "Transition.h"
 
 int main() {
-    /*vector<Transition> transitions = {
-        make_tuple('A', 'B', 1),
-        make_tuple('B', 'A', 2),
-        make_tuple('A', 'A', 2),
-        make_tuple('B', 'B', 1),
-        make_tuple('B', 'C', 3),
-        make_tuple('B', 'C', 2),
-        make_tuple('D', 'A', 5)
-    };*/
+    char stateNameA = 'A';
+    State *stateA = new State(stateNameA);
+    
+    char stateNameB = 'B';
+    State *stateB = new State(stateNameB);
 
-    Transition T1('A', 'B', 1);
-    Transition T2('B', 'A', 2);
+    Transition T1(stateA, stateB, 1);
+    Transition T2(stateB, stateA, 2);
     vector<Transition> transitions;
     transitions.push_back(T1);
     transitions.push_back(T2);
 
-    char stateNameA = 'A';
-    State *stateA = new State(stateNameA);
-    
-    
-    char stateNameB = 'B';
-    State *stateB = new State(stateNameB);
+
       
     FSM *fsm = new FSM(stateA);
     fsm->setTransitionsTable(transitions);
 
-    string actionName = "AddMul";
-    vector<string> operands = {"x", "x", "+", "1"};
-    Action AddMul(fsm, actionName, operands);
-    vector<Action> inputActionsList;
-    inputActionsList.push_back(AddMul);
+    string actionName = "wait";
+    vector<string> operands = {};
+    Action *waitAction = new WaitAction(fsm, actionName, operands);
+    vector<Action *> inputActionsList;
+    inputActionsList.push_back(waitAction);
     
     stateA->setActionsList(inputActionsList);
-    
+    stateB->setActionsList(inputActionsList);
+
     fsm->executer();
+
+ 
+
    
 }
 

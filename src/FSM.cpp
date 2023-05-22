@@ -28,8 +28,8 @@ void FSM::setFileDescriptor(ifstream _fileDescriptor) {
     fileDescriptor = _fileDescriptor;
 }
 */
-void FSM::setCurrentState(State* currentState) {
-    currentState = currentState;
+void FSM::setCurrentState(State* _currentState) {
+    currentState = _currentState;
 }
 
 void FSM::setTransitionsTable(vector<Transition> _transitionsTable) {
