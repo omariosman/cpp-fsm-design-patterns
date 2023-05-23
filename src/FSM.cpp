@@ -44,7 +44,23 @@ State* FSM::getCurrentState(){
     return currentState;
 }
 
+// Setter function to add or update a key-value pair in the vars map
+void FSM::setVar(const string& key, const string& value) {
+    vars[key] = value;
+}
+
+// Getter function to retrieve the value associated with a key in the vars map
+string FSM::getVar(const string& key) {
+    auto it = vars.find(key);
+    if (it != vars.end()) {
+        return it->second;
+    } else {
+        return key;  // Return empty string if key not found
+    }
+}
+
 void FSM::executer() {
     this->currentState->executer();
 }
+
 

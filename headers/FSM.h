@@ -24,7 +24,7 @@ private:
     State* currentState;
     vector<Transition> transitionsTable;
     //variables map
-    map<string, int> vars;
+    map<string, string> vars;
 public:
     FSM(State *_initialState);
     string getName();
@@ -37,6 +37,8 @@ public:
     // void setFileDescriptor(ifstream _name);
     State* getCurrentState();
     void setCurrentState(State* _state);
+    void setVar(const string& key, const string& value);
+    string getVar(const string& key);
     void executer();
 };
 
