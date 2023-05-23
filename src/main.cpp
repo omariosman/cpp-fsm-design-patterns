@@ -17,106 +17,139 @@
 #include "../headers/ActionFactory.h"
 #include "../headers/ConcreteFactory.h"
 
-int main() {
-    char stateNameA = 'A';
-    State *stateA = new State(stateNameA);
-    
-    char stateNameB = 'B';
-    State *stateB = new State(stateNameB);
 
-    char stateNameC = 'C';
-    State *stateC = new State(stateNameC);
+using namespace std;
 
-    Transition T1(stateA, stateB, 1);
-    Transition T2(stateB, stateC, 2);
-    vector<Transition> transitions;
-    transitions.push_back(T1);
-    transitions.push_back(T2);
-
-
-      
-    FSM *fsm = new FSM(stateA);
-    fsm->setTransitionsTable(transitions);
-    fsm->setState('A', stateA);
-    fsm->setState('B', stateB);
-    fsm->setState('C', stateC);
-    
-    /*
-    string printActionName = "Print";
-    vector<string> operandsPrint = {"test Print Action"};
-    Action *printAction = new PrintAction(fsm, printActionName, operandsPrint);
-    vector<Action *> inputActionsList;
-    inputActionsList.push_back(printAction);
-    
-
-    string sleepActionName = "sleep";
-    vector<string> operandsSleep = {"2"};
-    Action *sleepAction = new SleepAction(fsm, sleepActionName, operandsSleep);
-    inputActionsList.push_back(sleepAction);
-
-
-    string waitActionName = "wait";
-    vector<string> operandsWait = {};
-    Action *waitAction = new WaitAction(fsm, waitActionName, operandsWait);
-    inputActionsList.push_back(waitAction);
-    
-    stateA->setActionsList(inputActionsList);
-   
-    //putting end in B only
-    string endActionName = "end";
-    vector<string> operandsEnd = {};
-    Action *endAction = new EndAction(fsm, endActionName, operandsEnd);
-    inputActionsList.push_back(endAction);
-    
-    stateB->setActionsList(inputActionsList);
-    
-    string addMulActionName = "AddMul";
-    vector<string> operandsAddMul = {"X", "X", "*", "10"};
-    Action *addMulAction = new AddMulAction(fsm, addMulActionName, operandsAddMul);
-    vector<Action *> inputActionsList;
-    inputActionsList.push_back(addMulAction);
-
-    string addMulActionName1 = "AddMul";
-    vector<string> operandsAddMul1 = {"X", "X", "*", "10"};
-    Action *addMulAction1 = new AddMulAction(fsm, addMulActionName1, operandsAddMul);
-    //vector<Action *> inputActionsList;
-    inputActionsList.push_back(addMulAction1);
-    
-    string jmpActionName = "JMP";
-    vector<string> operandsJMP = {"C"};
-    Action *jmpAction = new JMPAction(fsm, jmpActionName, operandsJMP);
-    vector<Action *> inputActionsList;
-    inputActionsList.push_back(jmpAction);
-    stateA->setActionsList(inputActionsList);
-    */
-   /*
-    ActionFactory* factory = new ConcreteActionFactory();
-    factory->getProduct("AddMul", fsm, "AddMul", inputActionsList);
-    fsm->executer();
-    */
-    /*
-    fsm->setVar("X", "5"); 
-    fsm->setVar("Y", "10");
-
-    cout << fsm->getVar("X");
-    fsm->executer();
-    cout << fsm->getVar("X");
-*/   
-    string printActionName = "Print";
-    vector<string> operandsPrint = {"test Print Action"};
-    Action *printAction = new PrintAction(fsm, printActionName, operandsPrint);
-    vector<Action *> inputActionsList;
-    inputActionsList.push_back(printAction);
-        
-    ActionFactory* factory = new ConcreteActionFactory();
-
-    std::string actionName = "PRINT";
-
-    Action* action = factory->getProduct(actionName, fsm, "PRINT", operandsPrint);
-    cout << action->getName() << endl;
-
-    delete action;
-    delete factory;
-
+// Helper function to trim leading and trailing whitespaces from a string
+string trim(const string& str) {
+    size_t start = str.find_first_not_of(" \t");
+    size_t end = str.find_last_not_of(" \t");
+    if (start == string::npos) {
+        return "";
+    }
+    return str.substr(start, end - start + 1);
 }
+
+
+#include <iostream>
+#include <map>
+
+template<typename KeyType, typename ValueType>
+ValueType getFirstItemValue(const map<KeyType, ValueType>& myMap) {
+    if (myMap.empty()) {
+        // Handle the case when the map is empty
+        throw std::out_of_range("The map is empty.");
+    }
+
+    // Access the first element and return its value
+    return myMap.begin()->second;
+}
+
+
+
+int main() {
+    //read transitions from file (done)
+    //create states for every transition (done)
+    //put them inside a vector (done)
+    //read actions from the file
+    //create actions dynamically by factor
+    //put actions in a vector
+    //read states from files
+    //put actions inside the states
+    //put states inside a vector of States
+    //create FSM
+    //pass the first state in the map to the fsm constructor
+    //put transitions inside the fsm object
+    //put states inside the fsm object
+    //call fsm->executer()
+
+
+
+    // Read input file
+    ifstream inputFile("/home/omarosman23/Documents/Spring 2023/OOD/Assignments/Assignment4/Assignment4/src/fsm1.txt");
+    if (!inputFile.is_open()) {
+        cout << "Failed to open input file." << endl;
+        return 1;
+    }
+
+    vector<Transition *> transitionsTable;
+
+    // Parse input file and create states and transitions
+    map<char, State*> stateMap; // Map to store created states
+    string line;
+    bool readStates, readTransitions = false;        
+    while (getline(inputFile, line) && !line.empty()) {
+        line = trim(line);
+        if (line == "States:") {
+            readStates = true;
+            continue;
+        }
+        if (line == "Transitions:") {
+            readStates = false;
+            readTransitions = true;
+            continue;
+        }
+        /*
+        if (line == "Transitions:"){
+            break;  
+        }
+        */
+        //Read States
+        if (readStates && !line.empty()) {
+            // Parse state line
+            char stateName = line[0];
+            cout << "State Name: " << stateName << "\n";
+            // Create new State object
+            State* state = new State(stateName);
+
+            // Put the state in the map
+            stateMap[stateName] = state;
+        }
+
+        //Read Transitions
+        if (readTransitions && !line.empty()) {
+            // Parse transition line
+            char srcStateName, destStateName;
+            int transitionCode;
+            sscanf(line.c_str(), "%c, %c, %d", &srcStateName, &destStateName, &transitionCode);
+            
+            
+            // Get source state from the map
+            auto srcStateIt = stateMap.find(srcStateName);
+            State* srcState = nullptr;
+            if (srcStateIt != stateMap.end()) {
+                srcState = srcStateIt->second;
+            } else {
+                cout << "state not found\n";
+            }
+            // Get destination state from the map
+            auto destStateIt = stateMap.find(destStateName);
+            State* destState = nullptr;
+            if (destStateIt != stateMap.end()) {
+                destState = destStateIt->second;
+            } else {
+                cout << "state not found\n";
+            } 
+
+            // Create transition
+            Transition* transition = new Transition(srcState, destState, transitionCode);
+            transitionsTable.push_back(transition);
+
+        }
+    }
+    
+    // Close input file
+    inputFile.close();
+
+    //Get the initial state form the first state in the first transition line in the input file
+    State *initialState = getFirstItemValue(stateMap);
+    
+    //Create the FSM object and send the initial state to it in the constructor
+    FSM *fsm = new FSM(initialState);
+    fsm->setStates(stateMap);
+    fsm->setTransitionsTable(transitionsTable);
+
+    return 0;
+}
+
 

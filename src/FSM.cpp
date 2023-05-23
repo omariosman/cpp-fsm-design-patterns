@@ -32,11 +32,11 @@ void FSM::setCurrentState(State* _currentState) {
     currentState = _currentState;
 }
 
-void FSM::setTransitionsTable(vector<Transition> _transitionsTable) {
+void FSM::setTransitionsTable(vector<Transition *> _transitionsTable) {
     transitionsTable = _transitionsTable;
 }
 
-vector<Transition> FSM::getTransitionsTable(){
+vector<Transition *> FSM::getTransitionsTable(){
     return transitionsTable;
 }
 
@@ -55,7 +55,7 @@ string FSM::getVar(const string& key) {
     if (it != vars.end()) {
         return it->second;
     } else {
-        return key;  // Return empty string if key not found
+        return key; 
     }
 }
 
@@ -68,9 +68,14 @@ State* FSM::getState(char key) {
     if (it != states.end()) {
         return it->second;
     } 
-    /*
-        throw error if state not found
-    */
+}
+
+void FSM::setStates(map<char, State *> _states) {
+    states = _states;
+}
+
+map<char, State *> FSM::getStates() {
+    return states;
 }
 
 void FSM::executer() {

@@ -22,7 +22,7 @@ private:
     string fileName;
     ifstream fileDescriptor;
     State* currentState;
-    vector<Transition> transitionsTable;
+    vector<Transition *> transitionsTable;
     //variables map
     map<string, string> vars;
     //states
@@ -33,8 +33,8 @@ public:
     void setName(string _name);
     string getFileName();
     void setFileName(string _name);
-    vector<Transition> getTransitionsTable();
-    void setTransitionsTable(vector<Transition> _transitionsTable);
+    vector<Transition *> getTransitionsTable();
+    void setTransitionsTable(vector<Transition *> _transitionsTable);
     // ifstream getFileDescriptor();
     // void setFileDescriptor(ifstream _name);
     State* getCurrentState();
@@ -42,6 +42,8 @@ public:
     void setVar(const string& key, const string& value);
     string getVar(const string& key);
     void setState(char key, State* value);
+    void setStates(map<char, State *> states);
+    map<char, State *> getStates();
     State* getState(char key);
     void executer();
 };
