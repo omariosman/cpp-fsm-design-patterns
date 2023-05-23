@@ -25,6 +25,8 @@ private:
     vector<Transition> transitionsTable;
     //variables map
     map<string, string> vars;
+    //states
+    map<char, State *> states;
 public:
     FSM(State *_initialState);
     string getName();
@@ -39,6 +41,8 @@ public:
     void setCurrentState(State* _state);
     void setVar(const string& key, const string& value);
     string getVar(const string& key);
+    void setState(char key, State* value);
+    State* getState(char key);
     void executer();
 };
 

@@ -35,7 +35,10 @@ int main() {
       
     FSM *fsm = new FSM(stateA);
     fsm->setTransitionsTable(transitions);
-
+    fsm->setState('A', stateA);
+    fsm->setState('B', stateB);
+    fsm->setState('C', stateC);
+    
     /*
     string printActionName = "Print";
     vector<string> operandsPrint = {"test Print Action"};
@@ -83,10 +86,8 @@ int main() {
     vector<Action *> inputActionsList;
     inputActionsList.push_back(jmpAction);
     stateA->setActionsList(inputActionsList);
-    
-    fsm->executer();   
 
-    
+    fsm->executer();
     /*
     fsm->setVar("X", "5"); 
     fsm->setVar("Y", "10");

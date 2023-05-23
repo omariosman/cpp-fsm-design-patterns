@@ -59,6 +59,20 @@ string FSM::getVar(const string& key) {
     }
 }
 
+void FSM::setState(char key, State* value) {
+    states[key] = value;
+}
+
+State* FSM::getState(char key) {
+    auto it = states.find(key);
+    if (it != states.end()) {
+        return it->second;
+    } 
+    /*
+        throw error if state not found
+    */
+}
+
 void FSM::executer() {
     this->currentState->executer();
 }

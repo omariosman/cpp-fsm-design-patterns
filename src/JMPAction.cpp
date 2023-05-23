@@ -29,15 +29,17 @@ char JMPAction::executer() {
     vector<Transition> transitions = fsm->getTransitionsTable();
     bool canReach = canReachDestination(currentStateName, destStateName, transitions);
     
-    if(canReach)
-    {
-    cout<< "moya, moya"<<endl;
-    //fsm->setCurrentState(testState);
-    //fsm->executer();
+    if(canReach) {
+        cout<< "Destination can be reached.\n"<<endl;
+        State* destState = fsm->getState(destStateName);
+        cout << "name: " << destState->getName() << "\n";
+        fsm->setCurrentState(destState);
+        fsm->executer();
     }
-    else
-    //throw error and proceed
-    cout<<endl<<"Invalid transition, no path found to destination state"<<endl;
+    else {
+        //no path found
+        cout<<endl<<"Invalid transition, no path found to destination state"<<endl;
+    }
 }
 
 bool JMPAction::canReachDestination(char currentState, char destinationState, vector<Transition> transitions) {
