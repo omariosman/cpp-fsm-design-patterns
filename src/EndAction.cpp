@@ -21,7 +21,7 @@ void EndAction::setFSM(FSM *_fsm) {
 
 
 void EndAction::executer() {
-    cout << "EndAction executer\n";
+    //cout << "EndAction executer\n";
     exit(0);
     
 }

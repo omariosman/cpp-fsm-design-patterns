@@ -27,8 +27,7 @@ vector<Action *> State::getActionsList(){
 
 
 void State::executer() {
-    cout << "fsm executer\n";
-    cout << "actionsList size: " << actionsList.size();
+    //cout << "fsm executer\n";
     //call list of acitons executers
     for (auto action: actionsList) {
         action->executer();

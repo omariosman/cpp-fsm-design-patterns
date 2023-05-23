@@ -76,7 +76,7 @@ map<char, State *> FSM::getStates() {
 }
 
 void FSM::executer() {
-    cout << "fsm executer\n";
+    //cout << "fsm executer\n";
     this->currentState->executer();
 }
 

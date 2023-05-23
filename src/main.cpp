@@ -68,7 +68,12 @@ int main() {
     vector<Action*> actions;
 
     // Read input file
-    ifstream inputFile("/home/omarosman23/Documents/Spring 2023/OOD/Assignments/Assignment4/Assignment4/src/fsm1.fsm");
+    string basedir = "/home/omarosman23/Documents/Spring 2023/OOD/Assignments/Assignment4/Assignment4/src/";
+    string filename;
+    cout << "Enter file name: ";
+    cin >> filename;
+    string filepath = basedir + filename;
+    ifstream inputFile(filepath);
     if (!inputFile.is_open()) {
         cout << "Failed to open input file." << endl;
         return 1;
@@ -109,11 +114,7 @@ int main() {
             readTransitions = true;
             continue;
         }
-        /*
-        if (line == "Transitions:"){
-            break;  
-        }
-        */
+
         //Read States
         if (readStates && !line.empty()) {
             actions.clear();
@@ -122,8 +123,6 @@ int main() {
             //cout << "State Name: " << stateName << "\n";
             // Create new State object
             State* state = new State(stateName);
-
-
             
             // Process actions
             string actionStr = line.substr(line.find(":") + 1);
@@ -180,8 +179,6 @@ int main() {
             // Put the state in the map
             stateMap[stateName] = state;
         }
-        
-
         //Read Transitions
         if (readTransitions && !line.empty()) {
             // Parse transition line
@@ -220,11 +217,11 @@ int main() {
     
     //Create the FSM object and send the initial state to it in the constructor
     //FSM *fsm = new FSM(initialState);
-    cout << "size main: " << initialState->getActionsList().size();
+    cout << "size main: " << initialState->getActionsList().size() << "\n";
     fsm->setCurrentState(initialState);
     fsm->setStates(stateMap);
     fsm->setTransitionsTable(transitionsTable);
-    cout << "executinggggggggggg\n";
+while(true)
     fsm->executer();
     return 0;
 }

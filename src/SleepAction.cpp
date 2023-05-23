@@ -24,7 +24,7 @@ void SleepAction::setFSM(FSM *_fsm) {
 
 
 void SleepAction::executer() {
-    cout << "SleepAction executer\n";
+    //cout << "SleepAction executer\n";
     string inputSeconds = operands[0]; 
     int seconds = stoi(inputSeconds); 
     this_thread::sleep_for(chrono::seconds(seconds));

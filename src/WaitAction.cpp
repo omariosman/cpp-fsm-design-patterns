@@ -20,21 +20,21 @@ void WaitAction::setFSM(FSM *_fsm) {
 }
 
 void WaitAction::executer() {
-    cout << "WaitAction executer\n";
+    //cout << "WaitAction executer\n";
     //This logic will be implemented in the wait action
     
     bool found = false;
     vector<Transition *> transitions = fsm->getTransitionsTable();
     while (true) {
         int input;
-        cout << "Enter a transition code: ";
+        cout << "\nEnter a transition code: ";
         cin >> input;
+        cout << "transitions size: " << transitions.size();
         for (int i = 0; i < transitions.size(); i++) {
             Transition * transition = transitions[i];
             
             State* sourceState = transition->getSrcState();
             State* destState = transition->getDestState();
-
             State* currentState= fsm->getCurrentState();
             char currentStateName = currentState->getName();
             if (sourceState->getName() == currentStateName && input == transition->getTransitionCode()){

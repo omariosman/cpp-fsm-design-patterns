@@ -19,9 +19,18 @@ void AddMulAction::setFSM(FSM *_fsm) {
     fsm = _fsm;
 }
 
+bool AddMulAction::isNumeric(const string& str) {
+    for (char c : str) {
+        if (!isdigit(c)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 
 void AddMulAction::executer() {
-    cout << "AddMulAction executer\n";
+    //cout << "AddMulAction executer\n";
     string var = operands[0];
     string term1 = operands[1];
     string term2 = operands[3];

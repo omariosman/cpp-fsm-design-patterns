@@ -23,7 +23,7 @@ void JMPAction::setFSM(FSM *_fsm) {
 }
 
 void JMPAction::executer() {
-    cout << "JMPAction executer\n";
+    //cout << "JMPAction executer\n";
     char destStateName = operands[0][0];
     char currentStateName= fsm->getCurrentState()->getName();
     vector<Transition *> transitions = fsm->getTransitionsTable();

@@ -21,7 +21,7 @@ class Action;
 class AddMulAction: public Action {
 public:
     AddMulAction(FSM *_fsm, string _name, vector<string> _operands);
-    
+    bool isNumeric(const string& str);
     string getName();
     void setName(string _name);
     void setFSM(FSM *_fsm);

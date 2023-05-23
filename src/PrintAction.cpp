@@ -21,6 +21,6 @@ void PrintAction::setFSM(FSM *_fsm) {
 
 
 void PrintAction::executer() {
-    cout << "PrintAction executer\n";
+    //cout << "PrintAction executer\n";
     cout << fsm->getVar(operands[0]);
 }
