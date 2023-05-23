@@ -19,26 +19,25 @@ void WaitAction::setFSM(FSM *_fsm) {
     fsm = _fsm;
 }
 
-
-char WaitAction::executer() {
+void WaitAction::executer() {
     cout << "WaitAction executer\n";
     //This logic will be implemented in the wait action
     
     bool found = false;
-    vector<Transition> transitions = fsm->getTransitionsTable();
+    vector<Transition *> transitions = fsm->getTransitionsTable();
     while (true) {
         int input;
         cout << "Enter a transition code: ";
         cin >> input;
         for (int i = 0; i < transitions.size(); i++) {
-            Transition transition = transitions[i];
+            Transition * transition = transitions[i];
             
-            State* sourceState = transition.getSrcState();
-            State* destState = transition.getDestState();
+            State* sourceState = transition->getSrcState();
+            State* destState = transition->getDestState();
 
             State* currentState= fsm->getCurrentState();
             char currentStateName = currentState->getName();
-            if (sourceState->getName() == currentStateName && input == transition.getTransitionCode()){
+            if (sourceState->getName() == currentStateName && input == transition->getTransitionCode()){
                 found = true;
                 cout <<"found\n";
                 cout << "next state name: " << destState->getName()<<"\n";

@@ -20,7 +20,7 @@ void EndAction::setFSM(FSM *_fsm) {
 }
 
 
-char EndAction::executer() {
+void EndAction::executer() {
     cout << "EndAction executer\n";
     exit(0);
     

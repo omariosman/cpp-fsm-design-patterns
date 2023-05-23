@@ -22,11 +22,11 @@ void JMPAction::setFSM(FSM *_fsm) {
     fsm = _fsm;
 }
 
-char JMPAction::executer() {
+void JMPAction::executer() {
     cout << "JMPAction executer\n";
     char destStateName = operands[0][0];
     char currentStateName= fsm->getCurrentState()->getName();
-    vector<Transition> transitions = fsm->getTransitionsTable();
+    vector<Transition *> transitions = fsm->getTransitionsTable();
     bool canReach = canReachDestination(currentStateName, destStateName, transitions);
     
     if(canReach) {
@@ -42,18 +42,18 @@ char JMPAction::executer() {
     }
 }
 
-bool JMPAction::canReachDestination(char currentState, char destinationState, vector<Transition> transitions) {
+bool JMPAction::canReachDestination(char currentState, char destinationState, vector<Transition *> transitions) {
     // Base case: If the current state is the same as the destination state, return true
     if (currentState == destinationState) {
         return true;
     }
 
     // Iterate through each transition
-    for (Transition transition : transitions) {
+    for (Transition *transition : transitions) {
         // Check if the source state of the transition matches the current state
-        if (transition.getSrcState()->getName() == currentState) {
+        if (transition->getSrcState()->getName() == currentState) {
             // Recursively check if we can reach the destination state from the destination of this transition
-            if (canReachDestination(transition.getDestState()->getName(), destinationState, transitions)) {
+            if (canReachDestination(transition->getDestState()->getName(), destinationState, transitions)) {
                 return true;  // Path found
             }
         }

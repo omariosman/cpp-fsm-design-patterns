@@ -19,7 +19,6 @@ class Transition;
 class FSM {
 private:
     string name;
-    string fileName;
     ifstream fileDescriptor;
     State* currentState;
     vector<Transition *> transitionsTable;
@@ -27,12 +26,11 @@ private:
     map<string, string> vars;
     //states
     map<char, State *> states;
-public:
+public:    
+    FSM();
     FSM(State *_initialState);
     string getName();
     void setName(string _name);
-    string getFileName();
-    void setFileName(string _name);
     vector<Transition *> getTransitionsTable();
     void setTransitionsTable(vector<Transition *> _transitionsTable);
     // ifstream getFileDescriptor();

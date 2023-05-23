@@ -25,8 +25,8 @@ public:
     string getName();
     void setName(string _name);
     void setFSM(FSM *_fsm);
-    char executer();
-    bool canReachDestination(char, char, vector<Transition>);
+    bool canReachDestination(char, char, vector<Transition *>);
+    void executer();
     ~JMPAction() = default;
 };
 

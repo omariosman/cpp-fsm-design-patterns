@@ -1,5 +1,9 @@
 #include "../headers/FSM.h"
 
+FSM::FSM() {
+
+}
+
 FSM::FSM(State *_initialState) : currentState(_initialState) {
 
 }
@@ -12,13 +16,6 @@ void FSM::setName(string _name) {
     name = _name;
 }
 
-string FSM::getFileName() {
-    return fileName;
-}
-
-void FSM::setFileName(string _fileName) {
-    fileName = _fileName;
-}
 /*
 ifstream FSM::getFileDescriptor() {
     return fileDescriptor;
@@ -79,6 +76,7 @@ map<char, State *> FSM::getStates() {
 }
 
 void FSM::executer() {
+    cout << "fsm executer\n";
     this->currentState->executer();
 }
 

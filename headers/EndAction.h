@@ -26,7 +26,7 @@ public:
     void setName(string _name);
     void setFSM(FSM *_fsm);
     
-    char executer();
+    void executer();
     ~EndAction() = default;
 };
 

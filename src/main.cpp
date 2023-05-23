@@ -1,5 +1,6 @@
 #include<iostream>
 #include<fstream>
+#include <sstream>
 #include<string>
 #include<vector>
 #include <tuple>
@@ -45,8 +46,6 @@ ValueType getFirstItemValue(const map<KeyType, ValueType>& myMap) {
     return myMap.begin()->second;
 }
 
-
-
 int main() {
     //read transitions from file (done)
     //create states for every transition (done)
@@ -63,10 +62,13 @@ int main() {
     //put states inside the fsm object
     //call fsm->executer()
 
-
+    ActionFactory* factory = new ConcreteActionFactory();
+    vector<string> operands;
+    FSM* fsm = new FSM();
+    vector<Action*> actions;
 
     // Read input file
-    ifstream inputFile("/home/omarosman23/Documents/Spring 2023/OOD/Assignments/Assignment4/Assignment4/src/fsm1.txt");
+    ifstream inputFile("/home/omarosman23/Documents/Spring 2023/OOD/Assignments/Assignment4/Assignment4/src/fsm1.fsm");
     if (!inputFile.is_open()) {
         cout << "Failed to open input file." << endl;
         return 1;
@@ -80,6 +82,24 @@ int main() {
     bool readStates, readTransitions = false;        
     while (getline(inputFile, line) && !line.empty()) {
         line = trim(line);
+
+        // Read Var section
+        if (line.find("VAR") != std::string::npos) {
+            // Parse variables line
+            line.erase(0, 4);
+            istringstream iss(line);
+            string variable;
+            
+            while (getline(iss, variable, ',')) {
+                // Trim leading and trailing whitespaces from the variable
+                variable.erase(0, variable.find_first_not_of(" \t"));
+                variable.erase(variable.find_last_not_of(" \t") + 1);
+
+                // Call fsm->setVar for each variable
+                fsm->setVar(variable, "0");
+        }          
+        }
+
         if (line == "States:") {
             readStates = true;
             continue;
@@ -96,15 +116,71 @@ int main() {
         */
         //Read States
         if (readStates && !line.empty()) {
+            actions.clear();
             // Parse state line
             char stateName = line[0];
-            cout << "State Name: " << stateName << "\n";
+            //cout << "State Name: " << stateName << "\n";
             // Create new State object
             State* state = new State(stateName);
 
+
+            
+            // Process actions
+            string actionStr = line.substr(line.find(":") + 1);
+            //cout << "actionStr: " << actionStr << "\n";
+            actionStr = actionStr.substr(actionStr.find_first_not_of(" \t"));
+            //cout << "actionStr: " << actionStr << "\n";
+            size_t pos = 0;
+            string delimiter = ",";
+            while ((pos = actionStr.find(delimiter)) != string::npos) {
+                string actionToken = actionStr.substr(0, pos);
+                actionToken = actionToken.substr(actionToken.find_first_not_of(" \t"));
+                if (actionToken.substr(0, 5) == "PRINT") {
+                    string actionName = "PRINT";
+                    operands.clear();
+                    //cout << "ation token: " << actionToken.substr(6) << "\n";
+                    operands.push_back(actionToken.substr(6));
+                    Action* action = factory->getProduct(actionName, fsm, actionName, operands);
+                    actions.push_back(action);
+                } else if (actionToken.find("=") != string::npos) {
+                    string actionName = "AddMul";
+                    operands.clear();
+                    operands.push_back(actionToken.substr(0, actionToken.find("=")));
+                    operands.push_back(actionToken.substr(actionToken.find("=") + 1));
+                    operands.push_back(actionToken.substr(actionToken.find("=") + 1, 1));
+                    operands.push_back(actionToken.substr(actionToken.find("=") + 2));
+                    Action* action = factory->getProduct(actionName, fsm, actionName, operands);
+                    actions.push_back(action);
+                } else if (actionToken.substr(0, 5) == "sleep") {
+                    string actionName = "sleep";
+                    operands.clear();
+                    operands.push_back(actionToken.substr(6));
+                    Action* action = factory->getProduct(actionName, fsm, actionName, operands);
+                    actions.push_back(action);
+                } else if (actionToken == "wait") {
+                    string actionName = "wait";
+                    operands.clear();
+                    Action* action = factory->getProduct(actionName, fsm, actionName, operands);
+                    actions.push_back(action);
+                } else if (actionToken == "end") {
+                    string actionName = "end";
+                    operands.clear();
+                    Action* action = factory->getProduct(actionName, fsm, actionName, operands);
+                    actions.push_back(action);
+                } else if (actionToken.substr(0, 3) == "JMP") {
+                    string actionName = "JMP";
+                    operands.clear();
+                    operands.push_back(actionToken.substr(4));
+                    Action* action = factory->getProduct(actionName, fsm, actionName, operands);
+                    actions.push_back(action);
+                }
+                actionStr.erase(0, pos + delimiter.length());
+            }
+            state->setActionsList(actions);
             // Put the state in the map
             stateMap[stateName] = state;
         }
+        
 
         //Read Transitions
         if (readTransitions && !line.empty()) {
@@ -113,14 +189,13 @@ int main() {
             int transitionCode;
             sscanf(line.c_str(), "%c, %c, %d", &srcStateName, &destStateName, &transitionCode);
             
-            
             // Get source state from the map
             auto srcStateIt = stateMap.find(srcStateName);
             State* srcState = nullptr;
             if (srcStateIt != stateMap.end()) {
                 srcState = srcStateIt->second;
             } else {
-                cout << "state not found\n";
+                //cout << "state not found\n";
             }
             // Get destination state from the map
             auto destStateIt = stateMap.find(destStateName);
@@ -128,13 +203,12 @@ int main() {
             if (destStateIt != stateMap.end()) {
                 destState = destStateIt->second;
             } else {
-                cout << "state not found\n";
+                //cout << "state not found\n";
             } 
 
             // Create transition
             Transition* transition = new Transition(srcState, destState, transitionCode);
             transitionsTable.push_back(transition);
-
         }
     }
     
@@ -145,10 +219,13 @@ int main() {
     State *initialState = getFirstItemValue(stateMap);
     
     //Create the FSM object and send the initial state to it in the constructor
-    FSM *fsm = new FSM(initialState);
+    //FSM *fsm = new FSM(initialState);
+    cout << "size main: " << initialState->getActionsList().size();
+    fsm->setCurrentState(initialState);
     fsm->setStates(stateMap);
     fsm->setTransitionsTable(transitionsTable);
-
+    cout << "executinggggggggggg\n";
+    fsm->executer();
     return 0;
 }
 

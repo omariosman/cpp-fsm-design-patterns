@@ -20,7 +20,7 @@ void AddMulAction::setFSM(FSM *_fsm) {
 }
 
 
-char AddMulAction::executer() {
+void AddMulAction::executer() {
     cout << "AddMulAction executer\n";
     string var = operands[0];
     string term1 = operands[1];

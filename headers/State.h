@@ -23,6 +23,7 @@ public:
     char getName();
     void setName(char _name);
     void setActionsList(vector<Action *> _actionsList);
+    vector<Action *> getActionsList();
     // polymorphic
     void executer();
 };

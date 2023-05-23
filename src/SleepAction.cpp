@@ -23,7 +23,7 @@ void SleepAction::setFSM(FSM *_fsm) {
 }
 
 
-char SleepAction::executer() {
+void SleepAction::executer() {
     cout << "SleepAction executer\n";
     string inputSeconds = operands[0]; 
     int seconds = stoi(inputSeconds); 

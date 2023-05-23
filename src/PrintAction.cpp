@@ -20,24 +20,7 @@ void PrintAction::setFSM(FSM *_fsm) {
 }
 
 
-char PrintAction::executer() {
+void PrintAction::executer() {
     cout << "PrintAction executer\n";
-    //check if the operand exists in the FSM map
-    //if found:
-        // print the value
-    //else
-        // print the operand as it is
-    /*
-    if () {
-
-    } else {
-
-    }
-    */
-cout<< operands[0]<<endl;
-
-    
+    cout << fsm->getVar(operands[0]);
 }
-
-
-

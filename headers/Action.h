@@ -51,7 +51,7 @@ public:
     virtual void setName(string _name) = 0;
     virtual void setFSM(FSM *_fsm) = 0;
     
-    virtual char executer() = 0;
+    virtual void executer() = 0;
     virtual ~Action() = default;
 };
 
