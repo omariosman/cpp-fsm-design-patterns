@@ -1,9 +1,9 @@
+
+
 #include<iostream>
 #include<fstream>
-#include <sstream>
 #include<string>
-#include<vector>
-#include <tuple>
+#include <sstream>
 
 #include "../headers/FSM.h"
 //#include "Action.h"
@@ -18,12 +18,14 @@
 #include "../headers/ActionFactory.h"
 #include "../headers/ConcreteFactory.h"
 #include "../headers/ClientReader.h"
+#include "../headers/Transition.h"
 
-
-using namespace std;
+ClientReader::ClientReader(string _filepath){
+    filepath = _filepath;
+}
 
 // Helper function to trim leading and trailing whitespaces from a string
-string trim(const string& str) {
+string ClientReader::trim(const string& str) {
     size_t start = str.find_first_not_of(" \t");
     size_t end = str.find_last_not_of(" \t");
     if (start == string::npos) {
@@ -32,67 +34,24 @@ string trim(const string& str) {
     return str.substr(start, end - start + 1);
 }
 
-
-#include <iostream>
-#include <map>
-
-template<typename KeyType, typename ValueType>
-ValueType getFirstItemValue(const map<KeyType, ValueType>& myMap) {
-    if (myMap.empty()) {
-        // Handle the case when the map is empty
-        throw std::out_of_range("The map is empty.");
-    }
-
-    // Access the first element and return its value
-    return myMap.begin()->second;
-}
-
-int main() {
-    //read transitions from file (done)
-    //create states for every transition (done)
-    //put them inside a vector (done)
-    //read actions from the file
-    //create actions dynamically by factor
-    //put actions in a vector
-    //read states from files
-    //put actions inside the states
-    //put states inside a vector of States
-    //create FSM
-    //pass the first state in the map to the fsm constructor
-    //put transitions inside the fsm object
-    //put states inside the fsm object
-    //call fsm->executer()
-
-    // Read input file
-    
-    string basedir = "/home/omarosman23/Documents/Spring 2023/OOD/Assignments/Assignment4/Assignment4/src/";
-    string filename;
-    cout << "Enter file name: ";
-    cin >> filename;
-    string filepath = basedir + filename;
-
-    ClientReader *clientReader = new ClientReader(filepath);
-    clientReader->worker();
-
-/*
+int ClientReader::worker(){
+    cout << "wroker\n";
     ActionFactory* factory = new ConcreteActionFactory();
     vector<string> operands;
     FSM* fsm = new FSM();
     vector<Action*> actions;
-
 
     ifstream inputFile(filepath);
     if (!inputFile.is_open()) {
         cout << "Failed to open input file." << endl;
         return 1;
     }
-    
-    vector<Transition *> transitionsTable;
 
+    vector<Transition *> transitionsTable;
     // Parse input file and create states and transitions
     map<char, State*> stateMap; // Map to store created states
     string line;
-    bool readStates, readTransitions = false;        
+    bool readStates, readTransitions = false;  
     while (getline(inputFile, line) && !line.empty()) {
         line = trim(line);
         // Read Var section
@@ -108,7 +67,7 @@ int main() {
                 variable.erase(variable.find_last_not_of(" \t") + 1);
                 // Call fsm->setVar for each variable
                 fsm->setVar(variable, "0");
-        }          
+            }          
         }
 
         if (line == "States:") {
@@ -220,7 +179,7 @@ int main() {
 
     //Get the initial state form the first state in the first transition line in the input file
     State *initialState = getFirstItemValue(stateMap);
-    
+    cout << "initial state: " << initialState->getName() << "\n";
     //Create the FSM object and send the initial state to it in the constructor
     //FSM *fsm = new FSM(initialState);
     cout << "size main: " << initialState->getActionsList().size() << "\n";
@@ -230,8 +189,27 @@ int main() {
     while(true) {
         fsm->executer();
     }
-    */
-    return 0;
 }
+
+
+template<typename KeyType, typename ValueType>
+ValueType ClientReader::getFirstItemValue(const map<KeyType, ValueType>& myMap) {
+    if (myMap.empty()) {
+        // Handle the case when the map is empty
+        throw std::out_of_range("The map is empty.");
+    }
+
+    // Access the first element and return its value
+    return myMap.begin()->second;
+}
+
+void ClientReader::setFSM(FSM* _fsm){
+    fsm = _fsm;
+}
+
+FSM* ClientReader::getFSM(){
+    return fsm;
+}
+
 
 
