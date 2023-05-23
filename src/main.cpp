@@ -14,6 +14,8 @@
 #include "../headers/EndAction.h"
 #include "../headers/AddMulAction.h"
 #include "../headers/JMPAction.h"
+#include "../headers/ActionFactory.h"
+#include "../headers/ConcreteFactory.h"
 
 int main() {
     char stateNameA = 'A';
@@ -79,15 +81,19 @@ int main() {
     Action *addMulAction1 = new AddMulAction(fsm, addMulActionName1, operandsAddMul);
     //vector<Action *> inputActionsList;
     inputActionsList.push_back(addMulAction1);
-    */
+    
     string jmpActionName = "JMP";
     vector<string> operandsJMP = {"C"};
     Action *jmpAction = new JMPAction(fsm, jmpActionName, operandsJMP);
     vector<Action *> inputActionsList;
     inputActionsList.push_back(jmpAction);
     stateA->setActionsList(inputActionsList);
-
+    */
+   /*
+    ActionFactory* factory = new ConcreteActionFactory();
+    factory->getProduct("AddMul", fsm, "AddMul", inputActionsList);
     fsm->executer();
+    */
     /*
     fsm->setVar("X", "5"); 
     fsm->setVar("Y", "10");
@@ -95,6 +101,22 @@ int main() {
     cout << fsm->getVar("X");
     fsm->executer();
     cout << fsm->getVar("X");
-*/
+*/   
+    string printActionName = "Print";
+    vector<string> operandsPrint = {"test Print Action"};
+    Action *printAction = new PrintAction(fsm, printActionName, operandsPrint);
+    vector<Action *> inputActionsList;
+    inputActionsList.push_back(printAction);
+        
+    ActionFactory* factory = new ConcreteActionFactory();
+
+    std::string actionName = "PRINT";
+
+    Action* action = factory->getProduct(actionName, fsm, "PRINT", operandsPrint);
+    cout << action->getName() << endl;
+
+    delete action;
+    delete factory;
+
 }
 

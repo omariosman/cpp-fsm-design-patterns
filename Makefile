@@ -1,7 +1,7 @@
 # Makefile to compile C++ files and create an executable
 
 # Compiler and flags
-CXX = g++
+CXX = g++ -g
 CXXFLAGS = -std=c++11 -Wall -Iheaders
 
 # Directories
