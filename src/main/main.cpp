@@ -1,5 +1,6 @@
 #include<iostream>
 #include<string>
+#include <memory>
 #include "../headers/ClientReader/ClientReader.h"
 
 using namespace std;
@@ -12,9 +13,12 @@ int main() {
     cin >> filename;
     string filepath = basedir + filename;
 
-    ClientReader *clientReader = new ClientReader(filepath);
+    //ClientReader *clientReader = new ClientReader(filepath);
+    //clientReader->worker();
+    
+    unique_ptr<ClientReader> clientReader (new ClientReader(filepath));
+    //unique_ptr<ClientReader> clientReader = std::make_unique<ClientReader>(filepath);
     clientReader->worker();
-
     return 0;
 }
 
