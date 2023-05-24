@@ -30,4 +30,4 @@ public:
     ~EndAction() = default;
 };
 
-#endif ENDACTION_H
+#endif

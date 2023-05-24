@@ -41,4 +41,4 @@ public:
     }
 };
 
-#endif // CONCRETEACTIONFACTORY_H
+#endif 

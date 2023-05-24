@@ -30,4 +30,4 @@ public:
     ~PrintAction() = default;
 };
 
-#endif PRINTACTION_H
+#endif

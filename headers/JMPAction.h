@@ -30,4 +30,4 @@ public:
     ~JMPAction() = default;
 };
 
-#endif JMPACTION_H
+#endif

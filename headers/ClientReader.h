@@ -12,17 +12,16 @@ using namespace std;
 
 class ClientReader {
 protected:
-    FSM *fsm;
+    //FSM *fsm;
     string filepath;
 public:
     ClientReader(string _filepath);
     int worker();
-    void setFSM(FSM* _fsm);
-    FSM* getFSM();
-    string trim(const string& str);
-    template<typename KeyType, typename ValueType>
-    ValueType getFirstItemValue(const map<KeyType, ValueType>& myMap);
+    //void setFSM(FSM* _fsm);
+    //FSM* getFSM();
+    //template<typename KeyType, typename ValueType>
+    //ValueType getFirstItemValue(const map<KeyType, ValueType>& myMap);
     virtual ~ClientReader() = default;
 };
 
-#endif CLIENTREADER_H
+#endif 

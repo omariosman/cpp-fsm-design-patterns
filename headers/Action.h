@@ -55,4 +55,4 @@ public:
     virtual ~Action() = default;
 };
 
-#endif ACTION_H
+#endif

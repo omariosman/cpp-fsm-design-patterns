@@ -30,4 +30,4 @@ public:
     ~SleepAction() = default;
 };
 
-#endif SLEEPACTION_H
+#endif

@@ -30,7 +30,7 @@ void WaitAction::executer() {
         cout << "\nEnter a transition code: ";
         cin >> input;
         cout << "transitions size: " << transitions.size();
-        for (int i = 0; i < transitions.size(); i++) {
+        for (long unsigned int i = 0; i < transitions.size(); i++) {
             Transition * transition = transitions[i];
             
             State* sourceState = transition->getSrcState();

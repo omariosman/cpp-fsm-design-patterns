@@ -21,7 +21,7 @@
 
 
 using namespace std;
-
+/*
 // Helper function to trim leading and trailing whitespaces from a string
 string trim(const string& str) {
     size_t start = str.find_first_not_of(" \t");
@@ -31,7 +31,7 @@ string trim(const string& str) {
     }
     return str.substr(start, end - start + 1);
 }
-
+*/
 
 #include <iostream>
 #include <map>

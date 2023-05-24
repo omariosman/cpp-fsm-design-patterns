@@ -30,4 +30,4 @@ public:
     ~WaitAction() = default;
 };
 
-#endif WAITACTION_H
+#endif
