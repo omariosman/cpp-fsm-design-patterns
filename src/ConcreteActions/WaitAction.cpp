@@ -33,9 +33,9 @@ void WaitAction::executer() {
         for (long unsigned int i = 0; i < transitions.size(); i++) {
             Transition * transition = transitions[i];
             
-            State* sourceState = transition->getSrcState();
-            State* destState = transition->getDestState();
-            State* currentState= fsm->getCurrentState();
+            shared_ptr<State> sourceState = transition->getSrcState();
+            shared_ptr<State> destState = transition->getDestState();
+            shared_ptr<State> currentState= fsm->getCurrentState();
             char currentStateName = currentState->getName();
             if (sourceState->getName() == currentStateName && input == transition->getTransitionCode()){
                 found = true;

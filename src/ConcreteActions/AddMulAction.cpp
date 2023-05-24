@@ -34,11 +34,8 @@ void AddMulAction::executer() {
     string var = operands[0];
     string term1 = operands[1];
     string term2 = operands[3];
-    int counter = 0;
-
     term1 = fsm->getVar(term1);
     term2 = fsm->getVar(term2);
-    
     int op1_int = 0;
     int op2_int = 0;
     //Exception handling

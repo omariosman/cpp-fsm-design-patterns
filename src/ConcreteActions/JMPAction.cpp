@@ -31,7 +31,7 @@ void JMPAction::executer() {
     
     if(canReach) {
         //cout<< "Destination can be reached.\n"<<endl;
-        State* destState = fsm->getState(destStateName);
+        shared_ptr<State> destState = fsm->getState(destStateName);
         //cout << "name: " << destState->getName() << "\n";
         fsm->setCurrentState(destState);
         fsm->executer();

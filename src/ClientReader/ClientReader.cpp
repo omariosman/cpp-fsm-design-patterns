@@ -38,7 +38,8 @@ int ClientReader::worker(){
 
     vector<Transition *> transitionsTable;
     // Parse input file and create states and transitions
-    map<char, State*> stateMap; // Map to store created states
+    //map<char, State*> stateMap; // Map to store created states
+    map<char, shared_ptr<State>> stateMap; // Map to store created states
     string line;
     bool readStates = false;
     bool readTransitions = false;  
@@ -83,7 +84,9 @@ int ClientReader::worker(){
             char stateName = line[0];
 
             // Create new State object
-            State* state = new State(stateName);
+            shared_ptr<State> state (new State(stateName));
+
+            //State* state = new State(stateName);
             
             // Process actions
             string actionStr = line.substr(line.find(":") + 1);
@@ -153,7 +156,7 @@ int ClientReader::worker(){
             
             // Get source state from the map
             auto srcStateIt = stateMap.find(srcStateName);
-            State* srcState = nullptr;
+            shared_ptr<State> srcState = nullptr;
             if (srcStateIt != stateMap.end()) {
                 srcState = srcStateIt->second;
             } else {
@@ -161,7 +164,7 @@ int ClientReader::worker(){
             }
             // Get destination state from the map
             auto destStateIt = stateMap.find(destStateName);
-            State* destState = nullptr;
+            shared_ptr<State> destState = nullptr;
             if (destStateIt != stateMap.end()) {
                 destState = destStateIt->second;
             } else {
@@ -178,10 +181,12 @@ int ClientReader::worker(){
     inputFile.close();
 
     //Get the initial state form the first state in the first transition line in the input file
-    State *initialState = getFirstItemValue(stateMap);
+    //State *initialState = getFirstItemValue(stateMap);
+    shared_ptr<State> initialState = getFirstItemValue(stateMap);
+ 
     //Create the FSM object and send the initial state to it in the constructor
     //FSM *fsm = new FSM(initialState);
-    //cout << "size main: " << initialState->getActionsList().size() << "\n";
+    cout << "size main: " << initialState->getActionsList().size() << "\n";
     fsm->setCurrentState(initialState);
     fsm->setStates(stateMap);
     fsm->setTransitionsTable(transitionsTable);

@@ -13,11 +13,7 @@ int main() {
     cin >> filename;
     string filepath = basedir + filename;
 
-    //ClientReader *clientReader = new ClientReader(filepath);
-    //clientReader->worker();
-    
-    unique_ptr<ClientReader> clientReader (new ClientReader(filepath));
-    //unique_ptr<ClientReader> clientReader = std::make_unique<ClientReader>(filepath);
+    shared_ptr<ClientReader> clientReader (new ClientReader(filepath));
     clientReader->worker();
     return 0;
 }

@@ -2,6 +2,7 @@
 #define TRANSITION_H
 
 #include<iostream>
+#include<memory>
 #include<fstream>
 #include<string>
 #include<vector>
@@ -15,16 +16,16 @@ class State;
 
 class Transition {
 private:
-    State *srcState;
-    State *destState;
+    shared_ptr<State> srcState;
+    shared_ptr<State> destState;
     int transitionCode;
 public:
-    Transition(State *_srcState,State *_destState, int _transitionCode );
+    Transition(shared_ptr<State> _srcState, shared_ptr<State> _destState, int _transitionCode );
    // char srcState();
     //void setName(char _name);
 
-    State *getSrcState();
-    State *getDestState();
+    shared_ptr<State> getSrcState();
+    shared_ptr<State> getDestState();
     int getTransitionCode();
 
 };

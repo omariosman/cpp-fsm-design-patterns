@@ -20,29 +20,29 @@ class FSM {
 private:
     string name;
     ifstream fileDescriptor;
-    State* currentState;
+    shared_ptr<State> currentState;
     vector<Transition *> transitionsTable;
     //variables map
     map<string, string> vars;
     //states
-    map<char, State *> states;
+    map<char, shared_ptr<State>> states;
 public:    
     FSM();
-    FSM(State *_initialState);
+    FSM(shared_ptr<State>_initialState);
     string getName();
     void setName(string _name);
     vector<Transition *> getTransitionsTable();
     void setTransitionsTable(vector<Transition *> _transitionsTable);
     // ifstream getFileDescriptor();
     // void setFileDescriptor(ifstream _name);
-    State* getCurrentState();
-    void setCurrentState(State* _state);
+    shared_ptr<State> getCurrentState();
+    void setCurrentState(shared_ptr<State> _state);
     void setVar(const string& key, const string& value);
     string getVar(const string& key);
-    void setState(char key, State* value);
-    void setStates(map<char, State *> states);
-    map<char, State *> getStates();
-    State* getState(char key);
+    void setState(char key, shared_ptr<State> value);
+    void setStates(map<char, shared_ptr<State>> states);
+    map<char, shared_ptr<State>> getStates();
+    shared_ptr<State> getState(char key);
     void executer();
 };
 

@@ -1,10 +1,12 @@
 #include "../headers/FSM/FSM.h"
+#include<iostream>
+#include<memory>
 
 FSM::FSM() {
 
 }
 
-FSM::FSM(State *_initialState) : currentState(_initialState) {
+FSM::FSM(shared_ptr<State> _initialState) : currentState(_initialState) {
 
 }
 
@@ -16,7 +18,7 @@ void FSM::setName(string _name) {
     name = _name;
 }
 
-void FSM::setCurrentState(State* _currentState) {
+void FSM::setCurrentState(shared_ptr<State> _currentState) {
     currentState = _currentState;
 }
 
@@ -28,7 +30,7 @@ vector<Transition *> FSM::getTransitionsTable(){
     return transitionsTable;
 }
 
-State* FSM::getCurrentState(){
+shared_ptr<State> FSM::getCurrentState(){
     return currentState;
 }
 
@@ -47,22 +49,22 @@ string FSM::getVar(const string& key) {
     }
 }
 
-void FSM::setState(char key, State* value) {
+void FSM::setState(char key, shared_ptr<State> value) {
     states[key] = value;
 }
 
-State* FSM::getState(char key) {
+shared_ptr<State> FSM::getState(char key) {
     auto it = states.find(key);
     if (it != states.end()) {
         return it->second;
     } 
 }
 
-void FSM::setStates(map<char, State *> _states) {
+void FSM::setStates(map<char, shared_ptr<State>> _states) {
     states = _states;
 }
 
-map<char, State *> FSM::getStates() {
+map<char, shared_ptr<State>> FSM::getStates() {
     return states;
 }
 
