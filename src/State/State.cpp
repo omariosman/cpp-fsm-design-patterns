@@ -29,8 +29,14 @@ vector<Action *> State::getActionsList(){
 void State::executer() {
     //cout << "fsm executer\n";
     //call list of acitons executers
-    for (auto action: actionsList) {
-        cout << "\nAction executing: " << action->getName() << "\n";
-        action->executer();
+    try {
+        for (auto action: actionsList) {
+            cout << "\nAction executing: " << action->getName() << "\n";
+            action->executer();
+        }
+    } catch (const exception& e) {
+        // Handle and report the exception
+        cout << "Something went wrong while iterating over actions list in the state: " << e.what() << endl;
+        return;
     }
 }

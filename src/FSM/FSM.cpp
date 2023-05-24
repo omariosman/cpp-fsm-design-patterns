@@ -71,7 +71,14 @@ map<char, shared_ptr<State>> FSM::getStates() {
 void FSM::executer() {
     //cout << "fsm executer\n";
     cout << "Active State: " << this->getCurrentState()->getName() << "\n";
-    this->currentState->executer();
+    try {
+        this->currentState->executer();
+    } catch (const exception& e) {
+        // Handle and report the exception
+        cout << "Something went wrong while executing the fsm: " << e.what() << endl;
+        return;
+    }
+    
 }
 
 
