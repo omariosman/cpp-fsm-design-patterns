@@ -186,7 +186,7 @@ int ClientReader::worker(){
  
     //Create the FSM object and send the initial state to it in the constructor
     //FSM *fsm = new FSM(initialState);
-    cout << "size main: " << initialState->getActionsList().size() << "\n";
+    //cout << "size main: " << initialState->getActionsList().size() << "\n";
     fsm->setCurrentState(initialState);
     fsm->setStates(stateMap);
     fsm->setTransitionsTable(transitionsTable);
