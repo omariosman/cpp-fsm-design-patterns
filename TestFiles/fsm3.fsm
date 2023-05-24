@@ -1,0 +1,17 @@
+FSM fsm3
+VAR X, Y
+States:
+a: PRINT “state A”, X=X+3, sleep 10, wait
+b: PRINT “state B”, Y=Y+2, sleep 10, JMP c
+c: PRINT “state C”, Y=Y*X, sleep 10, wait
+d: PRINT “thank you for using fsm3”, PRINT X, PRINT Y, end
+Transitions:
+a, b, 1
+a, a, 2
+b, a, 1
+b, c, 2
+b, b, 3
+c, d, 1
+c, a, 2
+c, b, 3
+
