@@ -36,11 +36,6 @@ void AddMulAction::executer() {
     string term2 = operands[3];
     int counter = 0;
 
-    for (const auto& operand : operands) {
-        std::cout << counter << ": " << operand << std::endl;
-        counter = counter + 1;
-    }
-    
     term1 = fsm->getVar(term1);
     term2 = fsm->getVar(term2);
     

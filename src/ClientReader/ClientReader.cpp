@@ -94,7 +94,7 @@ int ClientReader::worker(){
                     operands.clear();
                     //cout << "ation token: " << actionToken.substr(6) << "\n";
                     operands.push_back(actionToken.substr(6));
-                    Action* action = factory->getProduct(actionName, fsm, actionName, operands);
+                    Action* action = factory->getProduct(actionName, fsm, operands);
                     actions.push_back(action);
                 } else if (actionToken.find("=") != string::npos) {
                     string actionName = "AddMul";
@@ -107,29 +107,29 @@ int ClientReader::worker(){
                     operands.push_back(expression.substr(operatorPos, 1));
                     operands.push_back(expression.substr(operatorPos + 1));
 
-                    Action* action = factory->getProduct(actionName, fsm, actionName, operands);
+                    Action* action = factory->getProduct(actionName, fsm, operands);
                     actions.push_back(action);
                 } else if (actionToken.substr(0, 5) == "sleep") {
                     string actionName = "sleep";
                     operands.clear();
                     operands.push_back(actionToken.substr(6));
-                    Action* action = factory->getProduct(actionName, fsm, actionName, operands);
+                    Action* action = factory->getProduct(actionName, fsm, operands);
                     actions.push_back(action);
                 } else if (actionToken == "wait") {
                     string actionName = "wait";
                     operands.clear();
-                    Action* action = factory->getProduct(actionName, fsm, actionName, operands);
+                    Action* action = factory->getProduct(actionName, fsm, operands);
                     actions.push_back(action);
                 } else if (actionToken == "end") {
                     string actionName = "end";
                     operands.clear();
-                    Action* action = factory->getProduct(actionName, fsm, actionName, operands);
+                    Action* action = factory->getProduct(actionName, fsm, operands);
                     actions.push_back(action);
                 } else if (actionToken.substr(0, 3) == "JMP") {
                     string actionName = "JMP";
                     operands.clear();
                     operands.push_back(actionToken.substr(4));
-                    Action* action = factory->getProduct(actionName, fsm, actionName, operands);
+                    Action* action = factory->getProduct(actionName, fsm, operands);
                     actions.push_back(action);
                 }
                 actionStr.erase(0, pos + delimiter.length());
