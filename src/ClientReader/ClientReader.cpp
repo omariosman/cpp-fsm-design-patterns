@@ -44,6 +44,12 @@ int ClientReader::worker(){
     bool readTransitions = false;  
     while (getline(inputFile, line) && !line.empty()) {
         line = trim(line);
+        //Read machine name
+        if (line.find("FSM") != string::npos) {
+            line.erase(0, 4);
+            fsm->setName(line);   
+        }
+
         // Read Var section
         if (line.find("VAR") != string::npos) {
             // Parse variables line
