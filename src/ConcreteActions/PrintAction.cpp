@@ -22,5 +22,11 @@ void PrintAction::setFSM(FSM *_fsm) {
 
 void PrintAction::executer() {
     //cout << "PrintAction executer\n";
-    cout << fsm->getVar(operands[0]) << "\t";
+    try {
+        cout << fsm->getVar(operands[0]) << "\n";
+    } catch (const exception& e) {
+        // Handle and report the exception
+        cout << "Error occured while reading the variable value from the machine: " << e.what() << endl;
+        return; 
+    }
 }

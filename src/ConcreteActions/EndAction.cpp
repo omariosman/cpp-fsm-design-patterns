@@ -22,7 +22,14 @@ void EndAction::setFSM(FSM *_fsm) {
 
 void EndAction::executer() {
     //cout << "EndAction executer\n";
-    exit(0);
+    try {
+        exit(0);
+    } catch (const exception& e) {
+        // Handle and report the exception
+        cout << "Something went wrong while terminating the program: " << e.what() << endl;
+        return;
+    }
+    
     
 }
 

@@ -70,6 +70,7 @@ map<char, shared_ptr<State>> FSM::getStates() {
 
 void FSM::executer() {
     //cout << "fsm executer\n";
+    cout << "Active State: " << this->getCurrentState()->getName() << "\n";
     this->currentState->executer();
 }
 

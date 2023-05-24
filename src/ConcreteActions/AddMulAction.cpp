@@ -31,14 +31,32 @@ bool AddMulAction::isNumeric(const string& str) {
 
 void AddMulAction::executer() {
     //cout << "AddMulAction executer\n";
-    string var = operands[0];
-    string term1 = operands[1];
-    string term2 = operands[3];
-    term1 = fsm->getVar(term1);
-    term2 = fsm->getVar(term2);
+    string var;
+    string term1;
+    string term2;
+    string sign;
+    try {
+        var = operands[0];
+        term1 = operands[1];
+        sign = operands[2];
+        term2 = operands[3];
+    } catch (const exception& e) {
+        // Handle and report the exception
+        cout << "Something went wrong while reading values from the operands: " << e.what() << endl;
+        return;
+    }
+
     int op1_int = 0;
     int op2_int = 0;
-    //Exception handling
+    try {
+        term1 = fsm->getVar(term1);
+        term2 = fsm->getVar(term2);
+    } catch (const exception& e) {
+        // Handle and report the exception
+        cout << "Something went wrong while reading variables form the machine: " << e.what() << endl;
+        return;
+    }
+
     try {
         op1_int = stoi(term1);
         op2_int = stoi(term2);
@@ -50,9 +68,32 @@ void AddMulAction::executer() {
         return;
     }
 
-    int result = operands[2] == "+" ? op1_int + op2_int : op1_int * op2_int;
-    string result_str = to_string(result);
-    fsm->setVar(var, result_str);
+    int result;
+    try {
+        result = sign == "+" ? op1_int + op2_int : op1_int * op2_int;
+    } catch (const exception& e) {
+        // Handle and report the exception
+        cout << "Something went wrong while doing the plus/multiply operaation: " << e.what() << endl;
+        return;
+    }
+
+    string result_str;
+    try {
+        result_str = to_string(result);
+    } catch (const exception& e) {
+        // Handle and report the exception
+        cout << "Something went wrong while convrting result to string: " << e.what() << endl;
+        return;
+    }
+
+    try {
+        fsm->setVar(var, result_str);
+    } catch (const exception& e) {
+        // Handle and report the exception
+        cout << "Something went wrong while setting result variable in the machine vars map: " << e.what() << endl;
+        return;
+    }
+    
     
 }
 

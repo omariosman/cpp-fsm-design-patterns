@@ -26,8 +26,30 @@ void SleepAction::setFSM(FSM *_fsm) {
 void SleepAction::executer() {
     //cout << "SleepAction executer\n";
     string inputSeconds = operands[0]; 
-    int seconds = stoi(inputSeconds); 
-    this_thread::sleep_for(chrono::seconds(seconds));
+    try {
+        inputSeconds = operands[0]; 
+    } catch (const exception& e) {
+        // Handle and report the exception
+        cout << "Something went wrong while reading operands: " << e.what() << endl;
+        return;
+    }
+ 
+    int seconds = stoi(inputSeconds);
+    try {
+        seconds = stoi(inputSeconds);
+    } catch (const exception& e) {
+        // Handle and report the exception
+        cout << "Something went wrong while converting string to integer in sleep action: " << e.what() << endl;
+        return;
+    }
+ 
+    try {
+        this_thread::sleep_for(chrono::seconds(seconds));
+    } catch (const exception& e) {
+        // Handle and report the exception
+        cout << "Something went wrong while executing the sleep action: " << e.what() << endl;
+        return;
+    }
 }
 
 

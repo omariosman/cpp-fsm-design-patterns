@@ -30,6 +30,7 @@ void State::executer() {
     //cout << "fsm executer\n";
     //call list of acitons executers
     for (auto action: actionsList) {
+        cout << "\nAction executing: " << action->getName() << "\n";
         action->executer();
     }
 }

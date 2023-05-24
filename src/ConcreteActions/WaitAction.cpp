@@ -21,34 +21,38 @@ void WaitAction::setFSM(FSM *_fsm) {
 
 void WaitAction::executer() {
     //cout << "WaitAction executer\n";
-    //This logic will be implemented in the wait action
-    
     bool found = false;
     vector<Transition *> transitions = fsm->getTransitionsTable();
-    while (true) {
-        int input;
-        cout << "\nEnter a transition code: ";
-        cin >> input;
-        //cout << "transitions size: " << transitions.size();
-        for (long unsigned int i = 0; i < transitions.size(); i++) {
-            Transition * transition = transitions[i];
-            
-            shared_ptr<State> sourceState = transition->getSrcState();
-            shared_ptr<State> destState = transition->getDestState();
-            shared_ptr<State> currentState= fsm->getCurrentState();
-            char currentStateName = currentState->getName();
-            if (sourceState->getName() == currentStateName && input == transition->getTransitionCode()){
-                found = true;
-                //cout <<"found\n";
-                //cout << "next state name: " << destState->getName()<<"\n";
-                fsm->setCurrentState(destState);
-            } 
+    try {
+        while (true) {
+            int input;
+            cout << "\nEnter a transition code: ";
+            cin >> input;
+            //cout << "transitions size: " << transitions.size();
+            for (long unsigned int i = 0; i < transitions.size(); i++) {
+                Transition * transition = transitions[i];
+                
+                shared_ptr<State> sourceState = transition->getSrcState();
+                shared_ptr<State> destState = transition->getDestState();
+                shared_ptr<State> currentState= fsm->getCurrentState();
+                char currentStateName = currentState->getName();
+                if (sourceState->getName() == currentStateName && input == transition->getTransitionCode()){
+                    found = true;
+                    //cout <<"found\n";
+                    //cout << "next state name: " << destState->getName()<<"\n";
+                    fsm->setCurrentState(destState);
+                } 
+            }
+            if (!found) {
+                cout << "Invalid transition. Try again!";
+            } else {
+                break;
+            }
         }
-        if (!found) {
-            cout << "Invalid transition. Try again!";
-        } else {
-            break;
-        }
+    } catch (const exception& e) {
+        // Handle and report the exception
+        cout << "Something went wrong in the wait action: " << e.what() << endl;
+        return;
     }
 }
 
