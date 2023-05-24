@@ -13,7 +13,6 @@ ValueType getFirstItemValue(const map<KeyType, ValueType>& myMap) {
             // Handle the case when the map is empty
             throw out_of_range("The map is empty.");
         }
-
         // Access the first element and return its value
         return myMap.begin()->second;
     } catch (const exception& e) {
