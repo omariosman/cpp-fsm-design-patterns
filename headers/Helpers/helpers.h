@@ -7,10 +7,10 @@
 using namespace std;
 
 template<typename KeyType, typename ValueType>
-ValueType getFirstItemValue(const std::map<KeyType, ValueType>& myMap) {
+ValueType getFirstItemValue(const map<KeyType, ValueType>& myMap) {
     if (myMap.empty()) {
         // Handle the case when the map is empty
-        throw std::out_of_range("The map is empty.");
+        throw out_of_range("The map is empty.");
     }
 
     // Access the first element and return its value

@@ -29,7 +29,7 @@ void WaitAction::executer() {
         int input;
         cout << "\nEnter a transition code: ";
         cin >> input;
-        cout << "transitions size: " << transitions.size();
+        //cout << "transitions size: " << transitions.size();
         for (long unsigned int i = 0; i < transitions.size(); i++) {
             Transition * transition = transitions[i];
             
@@ -39,8 +39,8 @@ void WaitAction::executer() {
             char currentStateName = currentState->getName();
             if (sourceState->getName() == currentStateName && input == transition->getTransitionCode()){
                 found = true;
-                cout <<"found\n";
-                cout << "next state name: " << destState->getName()<<"\n";
+                //cout <<"found\n";
+                //cout << "next state name: " << destState->getName()<<"\n";
                 fsm->setCurrentState(destState);
             } 
         }

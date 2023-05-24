@@ -34,13 +34,34 @@ void AddMulAction::executer() {
     string var = operands[0];
     string term1 = operands[1];
     string term2 = operands[3];
+    int counter = 0;
+
+    for (const auto& operand : operands) {
+        std::cout << counter << ": " << operand << std::endl;
+        counter = counter + 1;
+    }
+    
     term1 = fsm->getVar(term1);
     term2 = fsm->getVar(term2);
-    int op1_int = stoi(term1);
-    int op2_int = stoi(term2);
+    
+    int op1_int = 0;
+    int op2_int = 0;
+    //Exception handling
+    try {
+        op1_int = stoi(term1);
+        op2_int = stoi(term2);
+    } catch (const std::invalid_argument& e) {
+        cerr << "Invalid argument: " << e.what() << endl;
+        return;
+    } catch (const std::out_of_range& e) {
+        cerr << "Out of range: " << e.what() << endl;
+        return;
+    }
+
     int result = operands[2] == "+" ? op1_int + op2_int : op1_int * op2_int;
     string result_str = to_string(result);
     fsm->setVar(var, result_str);
+    
 }
 
 

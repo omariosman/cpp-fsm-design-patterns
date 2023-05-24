@@ -30,9 +30,9 @@ void JMPAction::executer() {
     bool canReach = canReachDestination(currentStateName, destStateName, transitions);
     
     if(canReach) {
-        cout<< "Destination can be reached.\n"<<endl;
+        //cout<< "Destination can be reached.\n"<<endl;
         State* destState = fsm->getState(destStateName);
-        cout << "name: " << destState->getName() << "\n";
+        //cout << "name: " << destState->getName() << "\n";
         fsm->setCurrentState(destState);
         fsm->executer();
     }

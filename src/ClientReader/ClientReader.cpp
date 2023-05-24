@@ -24,7 +24,7 @@ ClientReader::ClientReader(string _filepath){
 }
 
 int ClientReader::worker(){
-    std::cout << "worker\n";
+    //cout << "worker\n";
     ActionFactory* factory = new ConcreteActionFactory();
     vector<string> operands;
     FSM* fsm = new FSM();
@@ -32,7 +32,7 @@ int ClientReader::worker(){
 
     ifstream inputFile(filepath);
     if (!inputFile.is_open()) {
-        std::cout << "Failed to open input file." << endl;
+        cout << "Failed to open input file." << endl;
         return 1;
     }
 
@@ -45,7 +45,7 @@ int ClientReader::worker(){
     while (getline(inputFile, line) && !line.empty()) {
         line = trim(line);
         // Read Var section
-        if (line.find("VAR") != std::string::npos) {
+        if (line.find("VAR") != string::npos) {
             // Parse variables line
             line.erase(0, 4);
             istringstream iss(line);
@@ -81,9 +81,9 @@ int ClientReader::worker(){
             
             // Process actions
             string actionStr = line.substr(line.find(":") + 1);
-            //std::cout << "actionStr: " << actionStr << "\n";
+            //cout << "actionStr: " << actionStr << "\n";
             actionStr = actionStr.substr(actionStr.find_first_not_of(" \t"));
-            //std::cout << "actionStr: " << actionStr << "\n";
+            //cout << "actionStr: " << actionStr << "\n";
             size_t pos = 0;
             string delimiter = ",";
             while ((pos = actionStr.find(delimiter)) != string::npos) {
@@ -92,7 +92,7 @@ int ClientReader::worker(){
                 if (actionToken.substr(0, 5) == "PRINT") {
                     string actionName = "PRINT";
                     operands.clear();
-                    //std::cout << "ation token: " << actionToken.substr(6) << "\n";
+                    //cout << "ation token: " << actionToken.substr(6) << "\n";
                     operands.push_back(actionToken.substr(6));
                     Action* action = factory->getProduct(actionName, fsm, actionName, operands);
                     actions.push_back(action);
@@ -100,9 +100,13 @@ int ClientReader::worker(){
                     string actionName = "AddMul";
                     operands.clear();
                     operands.push_back(actionToken.substr(0, actionToken.find("=")));
-                    operands.push_back(actionToken.substr(actionToken.find("=") + 1));
-                    operands.push_back(actionToken.substr(actionToken.find("=") + 1, 1));
-                    operands.push_back(actionToken.substr(actionToken.find("=") + 2));
+
+                    string expression = actionToken.substr(actionToken.find("=") + 1);
+                    size_t operatorPos = expression.find_first_of("+-*/");
+                    operands.push_back(expression.substr(0, operatorPos));
+                    operands.push_back(expression.substr(operatorPos, 1));
+                    operands.push_back(expression.substr(operatorPos + 1));
+
                     Action* action = factory->getProduct(actionName, fsm, actionName, operands);
                     actions.push_back(action);
                 } else if (actionToken.substr(0, 5) == "sleep") {
@@ -147,7 +151,7 @@ int ClientReader::worker(){
             if (srcStateIt != stateMap.end()) {
                 srcState = srcStateIt->second;
             } else {
-                //std::cout << "state not found\n";
+                //cout << "state not found\n";
             }
             // Get destination state from the map
             auto destStateIt = stateMap.find(destStateName);
@@ -155,7 +159,7 @@ int ClientReader::worker(){
             if (destStateIt != stateMap.end()) {
                 destState = destStateIt->second;
             } else {
-                //std::cout << "state not found\n";
+                //cout << "state not found\n";
             } 
 
             // Create transition
@@ -171,7 +175,7 @@ int ClientReader::worker(){
     State *initialState = getFirstItemValue(stateMap);
     //Create the FSM object and send the initial state to it in the constructor
     //FSM *fsm = new FSM(initialState);
-    std::cout << "size main: " << initialState->getActionsList().size() << "\n";
+    //cout << "size main: " << initialState->getActionsList().size() << "\n";
     fsm->setCurrentState(initialState);
     fsm->setStates(stateMap);
     fsm->setTransitionsTable(transitionsTable);
@@ -179,20 +183,6 @@ int ClientReader::worker(){
         fsm->executer();
     }
 }
-
-/*
-template<typename KeyType, typename ValueType>
-ValueType ClientReader::getFirstItemValue(const map<KeyType, ValueType>& myMap) {
-    if (myMap.empty()) {
-        // Handle the case when the map is empty
-        throw std::out_of_range("The map is empty.");
-    }
-
-    // Access the first element and return its value
-    std::cout << "first: " << myMap.begin()->first << "\n"; 
-    return myMap.begin()->second;
-}
-*/
 
 
 

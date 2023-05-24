@@ -9,7 +9,7 @@
 // Factory Interface
 class ActionFactory {
 public:
-    virtual Action* getProduct(const std::string& actionName, FSM* _fsm, const std::string& _name, const std::vector<std::string>& _operands) = 0;
+    virtual Action* getProduct(const string& actionName, FSM* _fsm, const string& _name, const vector<string>& _operands) = 0;
     virtual ~ActionFactory() {}
 };
 

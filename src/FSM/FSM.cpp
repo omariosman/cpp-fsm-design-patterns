@@ -16,15 +16,6 @@ void FSM::setName(string _name) {
     name = _name;
 }
 
-/*
-ifstream FSM::getFileDescriptor() {
-    return fileDescriptor;
-}
-
-void FSM::setFileDescriptor(ifstream _fileDescriptor) {
-    fileDescriptor = _fileDescriptor;
-}
-*/
 void FSM::setCurrentState(State* _currentState) {
     currentState = _currentState;
 }

@@ -14,7 +14,7 @@
 class ConcreteActionFactory : public ActionFactory {
 public:
     ConcreteActionFactory() = default; 
-    Action* getProduct(const std::string& actionName, FSM* _fsm, const std::string& _name, const std::vector<std::string>& _operands) override {
+    Action* getProduct(const string& actionName, FSM* _fsm, const string& _name, const vector<string>& _operands) override {
         Action* action = nullptr;
 
         if (actionName == "AddMul") {
@@ -31,7 +31,7 @@ public:
             action = new EndAction(_fsm, _name, _operands);
         } else {
             // Unknown action name, handle the error
-            std::cout << "Error: Unknown action name." << std::endl;
+            cout << "Error: Unknown action name." << endl;
         }
 
         return action;
