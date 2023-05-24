@@ -17,7 +17,7 @@ int main() {
         cout << "Something went wrong while reading file name: " << e.what() << endl;
         exit(0);
     }
-
+    //Instantiate a client reader object and pass the file path to it
     try {
         cout << "filepath: " << filepath << "\n";
         shared_ptr<ClientReader> clientReader (new ClientReader(filepath));
