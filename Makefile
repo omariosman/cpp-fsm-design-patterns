@@ -7,11 +7,11 @@ CXXFLAGS = -std=c++11 -Wall -Iheaders
 # Directories
 SRCDIR = src
 OBJDIR = obj
-BINDIR = executable
+BINDIR = bin
 
 # Files and targets
-SRCS = $(wildcard $(SRCDIR)/*.cpp)
-OBJS = $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(SRCS))
+SRCS := $(shell find $(SRCDIR) -name "*.cpp")
+OBJS := $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(SRCS))
 TARGET = $(BINDIR)/my_executable
 
 .PHONY: all clean
@@ -23,7 +23,7 @@ $(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
-	@mkdir -p $(OBJDIR)
+	@mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
